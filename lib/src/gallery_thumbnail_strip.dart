@@ -40,7 +40,10 @@ class GalleryThumbnailStrip extends StatelessWidget {
     final item = items[index];
     final isSelected = index == selectedIndex;
     final String imageUrl;
-    if (item.isVideo) {
+    if (item.previewUrl != null) {
+      // The caller knows where the preview is; deriving one would be a guess.
+      imageUrl = item.previewUrl!;
+    } else if (item.isVideo) {
       imageUrl = VideoUrlUtils.getPosterUrl(item.url);
     } else if (item.isPdf) {
       imageUrl = VideoUrlUtils.getPdfPreviewUrl(item.url);

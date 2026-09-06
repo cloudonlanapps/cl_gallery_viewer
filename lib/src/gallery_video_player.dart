@@ -28,6 +28,7 @@ class GalleryVideoPlayer extends StatefulWidget {
     required this.playerFactory,
     super.key,
     this.autoLoadVideo = false,
+    this.posterUrl,
   });
 
   final String videoUrl;
@@ -43,6 +44,13 @@ class GalleryVideoPlayer extends StatefulWidget {
   /// Used in mobile layout where the center item auto-plays.
   final bool autoLoadVideo;
 
+  /// Where the still frame lives, when the caller knows.
+  ///
+  /// Derived from [videoUrl] when not given, which assumes the poster is a
+  /// sibling file. A server that addresses media by id keeps it at the same
+  /// address under a different query, so it cannot be derived there.
+  final String? posterUrl;
+
   @override
   State<GalleryVideoPlayer> createState() => GalleryVideoPlayerState();
 }
@@ -55,7 +63,8 @@ class GalleryVideoPlayerState extends State<GalleryVideoPlayer> {
   bool hasError = false;
   bool showInPlaceVideo = false;
 
-  String get posterUrl => VideoUrlUtils.getPosterUrl(widget.videoUrl);
+  String get posterUrl =>
+      widget.posterUrl ?? VideoUrlUtils.getPosterUrl(widget.videoUrl);
 
   @override
   void initState() {

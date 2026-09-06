@@ -169,12 +169,14 @@ class GalleryDesktopState extends State<GalleryDesktop> {
     if (item.isPdf) {
       content = GalleryPdfCard(
         pdfUrl: item.url,
+        previewUrl: item.previewUrl,
         onDownload: () => widget.onPdfDownload?.call(item.url),
       );
     } else if (item.isVideo) {
       content = GalleryVideoPlayer(
         videoUrl: item.url,
         videoId: item.id,
+        posterUrl: item.previewUrl,
         isActiveVideo: activeVideoId == item.id,
         onPlayStateChanged: handleVideoPlayStateChanged,
         playerFactory: widget.playerFactory,

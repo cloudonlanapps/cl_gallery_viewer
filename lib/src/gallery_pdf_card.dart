@@ -12,24 +12,32 @@ class GalleryPdfCard extends StatelessWidget {
     required this.pdfUrl,
     required this.onDownload,
     super.key,
+    this.previewUrl,
   });
 
-  /// The original PDF URL (used to derive the preview image URL).
+  /// The original PDF URL. The preview image is derived from it when
+  /// [previewUrl] is not given.
   final String pdfUrl;
+
+  /// Where the page image lives, when the caller knows.
+  ///
+  /// A server that addresses media by id keeps the preview at the same
+  /// address under a different query, so it cannot be derived from [pdfUrl].
+  final String? previewUrl;
 
   /// Called when the download button is tapped.
   final VoidCallback onDownload;
 
   @override
   Widget build(BuildContext context) {
-    final previewUrl = VideoUrlUtils.getPdfPreviewUrl(pdfUrl);
+    final preview = previewUrl ?? VideoUrlUtils.getPdfPreviewUrl(pdfUrl);
 
     return GestureDetector(
       onTap: onDownload,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          buildPreviewImage(previewUrl),
+          buildPreviewImage(preview),
           buildDownloadButton(),
           buildPdfBadge(),
         ],
