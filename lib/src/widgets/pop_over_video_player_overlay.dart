@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:cl_video_player/cl_video_player.dart' show PopOverVideoPlayer;
-import 'package:cl_video_player/src/widgets/pop_over_video_player.dart'
+import 'package:cl_gallery_viewer/cl_gallery_viewer.dart'
+    show PopOverVideoPlayer;
+import 'package:cl_gallery_viewer/src/widgets/pop_over_video_player.dart'
     show PopOverVideoPlayer;
 import 'package:flutter/material.dart';
 

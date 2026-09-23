@@ -1,4 +1,4 @@
-name: cl_video_player_example
+name: cl_gallery_viewer_example
 description: Example app to test video player implementations
 publish_to: none
 
@@ -7,7 +7,7 @@ environment:
   flutter: ">=3.10.0"
 
 dependencies:
-  cl_video_player:
+  cl_gallery_viewer:
     path: ../
   file_picker: 8.3.7
   flutter:

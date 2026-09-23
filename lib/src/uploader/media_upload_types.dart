@@ -47,7 +47,7 @@ class MediaUploadRequest {
 /// Result of an upload (and subsequent status polls).
 ///
 /// Constructed by the host app inside its [MediaUploadCallback] /
-/// [MediaStatusCallback] — `cl_video_player` never builds this directly
+/// [MediaStatusCallback] — `cl_gallery_viewer` never builds this directly
 /// from a server payload.
 @immutable
 class MediaUploadResult {

@@ -1,5 +1,5 @@
-import 'package:cl_video_player/cl_video_player.dart' show HighlightMedia;
-import 'package:cl_video_player/src/widgets/highlight_media.dart'
+import 'package:cl_gallery_viewer/cl_gallery_viewer.dart' show HighlightMedia;
+import 'package:cl_gallery_viewer/src/widgets/highlight_media.dart'
     show HighlightMedia;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,4 +1,4 @@
-import 'package:cl_video_player/cl_video_player.dart';
+import 'package:cl_gallery_viewer/cl_gallery_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

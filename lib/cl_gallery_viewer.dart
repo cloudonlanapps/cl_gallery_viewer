@@ -1,4 +1,4 @@
-/// Video player implementations and gallery widgets.
+/// Gallery viewer: images, videos and PDFs, and the players behind them.
 ///
 /// Players:
 /// - `NativeVideoPlayer` - Flutter's official video_player package

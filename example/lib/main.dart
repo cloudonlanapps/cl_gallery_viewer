@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cl_video_player/cl_video_player.dart';
+import 'package:cl_gallery_viewer/cl_gallery_viewer.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-name: cl_video_player_upload_example
+name: cl_gallery_viewer_upload_example
 description: Demo app for the MediaUploader module — uses an in-memory fake backend (no SDK / network).
 publish_to: none
 
@@ -7,7 +7,7 @@ environment:
   flutter: ">=3.10.0"
 
 dependencies:
-  cl_video_player:
+  cl_gallery_viewer:
     path: ../
   flutter:
     sdk: flutter

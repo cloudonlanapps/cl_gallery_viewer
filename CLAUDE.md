@@ -1,4 +1,4 @@
-# cl_video_player
+# cl_gallery_viewer
 
 Shared video-player layer used by the Ice Hockey Maharashtra Flutter app and sibling packages. This repo is consumed both standalone and as a git submodule of the `icehockey_mh_app` workspace.
 

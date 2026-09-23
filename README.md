@@ -1,4 +1,4 @@
-# cl_video_player
+# cl_gallery_viewer
 
 Video player implementations for experimentation and testing. Provides 4 independent player types that implement a common interface.
 
@@ -10,21 +10,21 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  cl_video_player:
-    path: ../cl_video_player  # or your path
+  cl_gallery_viewer:
+    path: ../cl_gallery_viewer  # or your path
 ```
 
 ### Import
 
 ```dart
 // Import all players
-import 'package:cl_video_player/cl_video_player.dart';
+import 'package:cl_gallery_viewer/cl_gallery_viewer.dart';
 
 // Or import individual players
-import 'package:cl_video_player/src/video_player_native.dart';
-import 'package:cl_video_player/src/video_player_media_kit.dart';
-import 'package:cl_video_player/src/video_player_html.dart';
-import 'package:cl_video_player/src/video_player_overlay.dart';
+import 'package:cl_gallery_viewer/src/video_player_native.dart';
+import 'package:cl_gallery_viewer/src/video_player_media_kit.dart';
+import 'package:cl_gallery_viewer/src/video_player_html.dart';
+import 'package:cl_gallery_viewer/src/video_player_overlay.dart';
 ```
 
 ### Basic Usage
@@ -209,7 +209,7 @@ void main() {
 ## Running the Example
 
 ```bash
-cd cl_video_player/example
+cd cl_gallery_viewer/example
 flutter pub get
 flutter run -d chrome  # For web
 flutter run -d macos   # For macOS
@@ -233,7 +233,7 @@ Each player implementation is completely independent:
 
 ```
 lib/
-├── cl_video_player.dart           # Barrel file
+├── cl_gallery_viewer.dart           # Barrel file
 └── src/
     ├── video_player_interface.dart  # Shared interface
     ├── video_player_native.dart     # video_player package

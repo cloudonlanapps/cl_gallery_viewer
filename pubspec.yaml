@@ -1,5 +1,5 @@
-name: cl_video_player
-description: Video player implementations for experimentation and testing. Provides 4 independent player types.
+name: cl_gallery_viewer
+description: Media gallery viewer — images, videos and PDFs, with mobile and desktop layouts, a thumbnail strip, a full-screen image viewer, highlight media and an uploader.
 version: 0.1.0
 publish_to: none
 
