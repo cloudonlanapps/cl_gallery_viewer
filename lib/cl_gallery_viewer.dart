@@ -28,6 +28,8 @@ export 'src/uploader/file_picker_adapter.dart'
     show FilePickerAdapter, PickedMedia, defaultFilePicker;
 export 'src/uploader/media_upload_types.dart';
 export 'src/uploader/media_uploader.dart';
+// Browser detection
+export 'src/utils/browser_detect.dart';
 // Web-only players — guarded with conditional exports
 export 'src/video_player_html_stub.dart'
     if (dart.library.js_interop) 'src/video_player_html.dart';
@@ -43,4 +45,5 @@ export 'src/widgets/audio_controller_audio_mute.dart';
 export 'src/widgets/highlight_image.dart';
 // Highlight widgets
 export 'src/widgets/highlight_media.dart';
+export 'src/widgets/highlight_media_overlay_button.dart';
 export 'src/widgets/pop_over_video_player.dart';
