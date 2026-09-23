@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'video_player_interface.dart';
-import 'video_url_utils.dart';
 
 typedef OnPlayStateChanged =
     void Function(
@@ -26,9 +25,9 @@ class GalleryVideoPlayer extends StatefulWidget {
     required this.onPlayStateChanged,
     required this.isActiveVideo,
     required this.playerFactory,
+    required this.posterUrl,
     super.key,
     this.autoLoadVideo = false,
-    this.posterUrl,
   });
 
   final String videoUrl;
@@ -44,11 +43,8 @@ class GalleryVideoPlayer extends StatefulWidget {
   /// Used in mobile layout where the center item auto-plays.
   final bool autoLoadVideo;
 
-  /// Where the still frame lives, when the caller knows.
-  ///
-  /// Derived from [videoUrl] when not given, which assumes the poster is a
-  /// sibling file. A server that addresses media by id keeps it at the same
-  /// address under a different query, so it cannot be derived there.
+  /// Where the still frame lives, or null for none — which shows the
+  /// placeholder. Never derived from [videoUrl].
   final String? posterUrl;
 
   @override
@@ -62,9 +58,6 @@ class GalleryVideoPlayerState extends State<GalleryVideoPlayer> {
   bool isVisible = true;
   bool hasError = false;
   bool showInPlaceVideo = false;
-
-  String get posterUrl =>
-      widget.posterUrl ?? VideoUrlUtils.getPosterUrl(widget.videoUrl);
 
   @override
   void initState() {
@@ -122,30 +115,7 @@ class GalleryVideoPlayerState extends State<GalleryVideoPlayer> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Image.network(
-            posterUrl,
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-            loadingBuilder: (context, child, progress) {
-              if (progress == null) return child;
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.white),
-              );
-            },
-            errorBuilder: (context, error, stack) {
-              return Container(
-                color: Colors.grey[900],
-                child: const Center(
-                  child: Icon(
-                    Icons.videocam_off,
-                    color: Colors.white38,
-                    size: 48,
-                  ),
-                ),
-              );
-            },
-          ),
+          buildPoster(),
           Center(
             child: Container(
               width: 56,
@@ -162,6 +132,37 @@ class GalleryVideoPlayerState extends State<GalleryVideoPlayer> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget buildPoster() {
+    final posterUrl = widget.posterUrl;
+    if (posterUrl == null) return buildPosterPlaceholder();
+    return Image.network(
+      posterUrl,
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+      loadingBuilder: (context, child, progress) {
+        if (progress == null) return child;
+        return const Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        );
+      },
+      errorBuilder: (context, error, stack) => buildPosterPlaceholder(),
+    );
+  }
+
+  Widget buildPosterPlaceholder() {
+    return Container(
+      color: Colors.grey[900],
+      child: const Center(
+        child: Icon(
+          Icons.videocam_off,
+          color: Colors.white38,
+          size: 48,
+        ),
       ),
     );
   }

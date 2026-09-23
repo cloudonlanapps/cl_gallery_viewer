@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 
-import 'video_url_utils.dart';
-
 /// Gallery card for PDF items.
 ///
-/// Displays a server-provided `.webp` preview image with a download button
+/// Displays the caller's preview image of the first page with a download button
 /// overlay and a PDF badge. The caller provides the [onDownload] callback
 /// to handle platform-specific download/open behavior.
 class GalleryPdfCard extends StatelessWidget {
   const GalleryPdfCard({
     required this.pdfUrl,
     required this.onDownload,
+    required this.previewUrl,
     super.key,
-    this.previewUrl,
   });
 
-  /// The original PDF URL. The preview image is derived from it when
-  /// [previewUrl] is not given.
+  /// The original PDF URL.
   final String pdfUrl;
 
-  /// Where the page image lives, when the caller knows.
-  ///
-  /// A server that addresses media by id keeps the preview at the same
-  /// address under a different query, so it cannot be derived from [pdfUrl].
+  /// Where the page image lives, or null for none — which shows the
+  /// placeholder. Never derived from [pdfUrl].
   final String? previewUrl;
 
   /// Called when the download button is tapped.
@@ -30,14 +25,17 @@ class GalleryPdfCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = previewUrl ?? VideoUrlUtils.getPdfPreviewUrl(pdfUrl);
+    final preview = previewUrl;
 
     return GestureDetector(
       onTap: onDownload,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          buildPreviewImage(preview),
+          if (preview == null)
+            buildPlaceholder()
+          else
+            buildPreviewImage(preview),
           buildDownloadButton(),
           buildPdfBadge(),
         ],
@@ -60,14 +58,16 @@ class GalleryPdfCard extends StatelessWidget {
           ),
         );
       },
-      errorBuilder: (context, error, stack) {
-        return Container(
-          color: Colors.grey[200],
-          child: const Center(
-            child: Icon(Icons.picture_as_pdf, color: Colors.red, size: 48),
-          ),
-        );
-      },
+      errorBuilder: (context, error, stack) => buildPlaceholder(),
+    );
+  }
+
+  Widget buildPlaceholder() {
+    return Container(
+      color: Colors.grey[200],
+      child: const Center(
+        child: Icon(Icons.picture_as_pdf, color: Colors.red, size: 48),
+      ),
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'gallery_item.dart';
-import 'video_url_utils.dart';
 
 class GalleryThumbnailStrip extends StatelessWidget {
   const GalleryThumbnailStrip({
@@ -39,17 +38,11 @@ class GalleryThumbnailStrip extends StatelessWidget {
   Widget buildThumbnail(int index) {
     final item = items[index];
     final isSelected = index == selectedIndex;
-    final String imageUrl;
-    if (item.previewUrl != null) {
-      // The caller knows where the preview is; deriving one would be a guess.
-      imageUrl = item.previewUrl!;
-    } else if (item.isVideo) {
-      imageUrl = VideoUrlUtils.getPosterUrl(item.url);
-    } else if (item.isPdf) {
-      imageUrl = VideoUrlUtils.getPdfPreviewUrl(item.url);
-    } else {
-      imageUrl = item.url;
-    }
+    // An image is its own preview. A video or PDF shows only the preview the
+    // caller gave; with none it gets the placeholder, never a guessed URL.
+    final imageUrl = item.isImage
+        ? item.previewUrl ?? item.url
+        : item.previewUrl;
 
     return GestureDetector(
       onTap: () => onThumbnailTap(index),
@@ -71,22 +64,25 @@ class GalleryThumbnailStrip extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stack) {
-                    return Container(
-                      color: Colors.grey[800],
-                      child: const Center(
-                        child: Icon(
-                          Icons.broken_image,
-                          color: Colors.white38,
-                          size: 20,
+                if (imageUrl == null)
+                  ColoredBox(color: Colors.grey[800]!)
+                else
+                  Image.network(
+                    imageUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stack) {
+                      return Container(
+                        color: Colors.grey[800],
+                        child: const Center(
+                          child: Icon(
+                            Icons.broken_image,
+                            color: Colors.white38,
+                            size: 20,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    },
+                  ),
                 if (item.isVideo || item.isPdf)
                   Center(
                     child: Container(

@@ -8,10 +8,14 @@ class GalleryItem {
     required this.id,
     required this.url,
     required this.type,
-    this.previewUrl,
+    required this.previewUrl,
   });
 
-  factory GalleryItem.image(String url, {String? id, String? previewUrl}) {
+  factory GalleryItem.image(
+    String url, {
+    required String? previewUrl,
+    String? id,
+  }) {
     return GalleryItem(
       id: id ?? url,
       url: url,
@@ -20,7 +24,11 @@ class GalleryItem {
     );
   }
 
-  factory GalleryItem.video(String url, {String? id, String? previewUrl}) {
+  factory GalleryItem.video(
+    String url, {
+    required String? previewUrl,
+    String? id,
+  }) {
     return GalleryItem(
       id: id ?? url,
       url: url,
@@ -29,7 +37,11 @@ class GalleryItem {
     );
   }
 
-  factory GalleryItem.pdf(String url, {String? id, String? previewUrl}) {
+  factory GalleryItem.pdf(
+    String url, {
+    required String? previewUrl,
+    String? id,
+  }) {
     return GalleryItem(
       id: id ?? url,
       url: url,
@@ -42,13 +54,15 @@ class GalleryItem {
   final String url;
   final GalleryItemType type;
 
-  /// Where this item's still preview lives, when the caller knows.
+  /// Where this item's still preview lives, or null when it has none.
   ///
-  /// Left null, a preview is derived from [url] by rewriting it into a
-  /// sibling path (`clip.mp4` → `clip_poster.webp`), which is right for a
-  /// static file tree and wrong for anything else. A server that addresses
-  /// media by id keeps the preview at the same address under a different
-  /// query, so it cannot be derived at all — such a caller sets this.
+  /// Required, so every caller answers; nullable, so "there is no preview"
+  /// is a sayable answer. Null gets the package's placeholder — the package
+  /// never derives a URL the caller did not choose. An image is its own
+  /// preview and passes null.
+  ///
+  /// A static file tree that keeps previews as sibling files can still say
+  /// so at the call site: `previewUrl: VideoUrlUtils.getPosterUrl(url)`.
   final String? previewUrl;
 
   bool get isImage => type == GalleryItemType.image;
